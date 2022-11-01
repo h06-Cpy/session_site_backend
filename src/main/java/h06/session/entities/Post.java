@@ -16,6 +16,8 @@ public class Post {
 
     private String board;
 
+    private String title;
+
     private String date;
 
     private String content;
