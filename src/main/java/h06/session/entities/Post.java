@@ -25,7 +25,7 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
-    public Post(String title) { //constructor for the test
-        this.title = title;
-    }
+//    public Post(String title) { //constructor for the test... why it can't be used in actual execution?
+//        this.title = title;
+//    }
 }

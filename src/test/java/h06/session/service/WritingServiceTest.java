@@ -20,7 +20,7 @@ class WritingServiceTest {
     @Test
     public void 글쓰기() throws Exception {
         //given
-        Post post = new Post("퉤수투 제목");
+        Post post = new Post();
 
         //when
         Long postId = writingService.writePost(post);
