@@ -16,8 +16,9 @@ public class WritingService {
     private final WritingRepository writingRepository;
 
     @Transactional
-    public void writePost(Post post) {
+    public Long writePost(Post post) {
         writingRepository.savePost(post);
+        return post.getId(); // added for the test
     }
 
     public Post findOnePost(Long postId) {

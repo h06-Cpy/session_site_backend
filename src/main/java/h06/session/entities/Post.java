@@ -25,5 +25,7 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
-
+    public Post(String title) { //constructor for the test
+        this.title = title;
+    }
 }
