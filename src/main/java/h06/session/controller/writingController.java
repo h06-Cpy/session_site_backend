@@ -21,6 +21,7 @@ public class writingController {
     @GetMapping("/")
     public ResponseEntity<List<Post>> mainBoard() {
         List<Post> posts = writingService.findPosts();
+
         return ResponseEntity.status(HttpStatus.OK).body(posts);
     }
 

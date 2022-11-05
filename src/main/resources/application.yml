@@ -6,7 +6,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl_auto: create
+      ddl_auto: update #create면 시작할 때 테이블 다 drop, update면 drop 안함
     properties:
       hibernate:
         format_sql: true
