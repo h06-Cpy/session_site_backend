@@ -1,14 +1,17 @@
 package h06.session.service;
 
-import h06.session.controller.PostDto;
+import h06.session.dto.BoardDto;
+import h06.session.dto.PostDto;
 import h06.session.entities.Comment;
 import h06.session.entities.Post;
 import h06.session.repository.WritingRepository;
+import h06.session.vo.NewCommentVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -28,12 +31,15 @@ public class WritingService {
         return new PostDto.Response(post);
     }
 
-    public List<Post> findPosts() {
-        return writingRepository.findAllPost();
+    public List<BoardDto> findPosts() {
+        List<Post> posts = writingRepository.findAllPost();
+        return posts.stream().map(BoardDto::new).collect(Collectors.toList());
     }
 
     @Transactional
-    public Long writeComment(Comment comment) {
+    public Long writeComment(NewCommentVo commentVo) {
+        Post post = writingRepository.findOnePost(commentVo.getPostId());
+        Comment comment = new Comment(commentVo.getDate(), commentVo.getContent(), post);
         writingRepository.saveComment(comment);
         return comment.getId();
     }

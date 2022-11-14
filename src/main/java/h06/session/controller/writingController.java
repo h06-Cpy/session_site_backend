@@ -2,11 +2,13 @@ package h06.session.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import h06.session.dto.BoardDto;
 import h06.session.dto.PostDto;
 import h06.session.entities.Comment;
 import h06.session.entities.Post;
 import h06.session.service.WritingService;
 
+import h06.session.vo.NewCommentVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,19 +24,8 @@ public class writingController {
 
 
     @GetMapping("/")
-    public ResponseEntity<List<ObjectNode>> mainBoard() { //we can make this as a dto too!
-        ObjectMapper mapper = new ObjectMapper();
-        List<Post> posts = writingService.findPosts();
-        List<ObjectNode> response = posts.stream()
-                .map(post -> {
-                    ObjectNode objectNode = mapper.createObjectNode();
-                    objectNode.put("id", post.getId());
-                    objectNode.put("title", post.getTitle());
-                    objectNode.put("date", post.getDate());
-                    objectNode.put("commentNum", post.getComments().size());
-                    return objectNode;
-                })
-                .collect(Collectors.toList());
+    public ResponseEntity<List<BoardDto>> mainBoard() {
+        List<BoardDto> response = writingService.findPosts();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -51,11 +42,9 @@ public class writingController {
     }
 
     @PostMapping("/comment")
-    public String newComment(@RequestBody Comment comment) {
-
-        writingService.writeComment(comment);
+    public String newComment(@RequestBody NewCommentVo commentVo) {
+        writingService.writeComment(commentVo);
         return "success";
     }
-//    @GetMapping("/comment/{postId}")
-//    public
+
 }

@@ -29,4 +29,8 @@ public class WritingRepository {
         em.persist(comment);
     }
 
+    public Comment findOneComment(Long id) {
+        return em.find(Comment.class, id);
+    }
+
 }
