@@ -1,5 +1,6 @@
 package h06.session.repository;
 
+import h06.session.entities.Comment;
 import h06.session.entities.Post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -23,4 +24,9 @@ public class WritingRepository {
     public List<Post> findAllPost() {
         return em.createQuery("select p from Post p", Post.class).getResultList();
     }
+
+    public void saveComment(Comment comment) {
+        em.persist(comment);
+    }
+
 }

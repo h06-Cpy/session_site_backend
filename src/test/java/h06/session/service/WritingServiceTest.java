@@ -1,5 +1,6 @@
 package h06.session.service;
 
+import h06.session.entities.Comment;
 import h06.session.entities.Post;
 import h06.session.repository.WritingRepository;
 import org.assertj.core.api.Assertions;
@@ -15,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class WritingServiceTest {
 
     @Autowired WritingService writingService;
-    @Autowired WritingRepository writingRepository;
 
     @Test
     public void 글쓰기() throws Exception {
