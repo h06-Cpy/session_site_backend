@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -29,14 +31,17 @@ class WritingServiceTest {
         Assertions.assertThat(post).isEqualTo(writingRepository.findOnePost(postId));
     }
 
-//    @Test
-//    public void 댓글쓰기() throws Exception {
-//        //given
-//        NewCommentVo commentVo = new NewCommentVo("test content", "test date", 1L);
-//        //when
-//        Long commentId = writingService.writeComment(commentVo);
-//
-//        //then
-//
-//    }
+    @Test
+    public void 댓글쓰기() throws Exception {
+        //given
+        NewCommentVo commentVo = new NewCommentVo("test content", "test date", 1L);
+        //when
+        Long commentId = writingService.writeComment(commentVo);
+
+        Comment newComment = writingRepository.findOneComment(commentId);
+        //then
+        Assertions.assertThat(newComment.getContent()).isEqualTo(commentVo.getContent());
+        Assertions.assertThat(newComment.getDate()).isEqualTo(commentVo.getDate());
+
+    }
 }
