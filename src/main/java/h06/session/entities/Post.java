@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Post {
+public class Post extends BaseTimeEntity{
 
     @Id @GeneratedValue
     @Column(name = "post_id")
@@ -19,8 +19,6 @@ public class Post {
     private String board;
 
     private String title;
-
-    private String date;
 
     private String content;
 

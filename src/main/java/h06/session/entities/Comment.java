@@ -1,5 +1,6 @@
 package h06.session.entities;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -8,14 +9,12 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Comment {
+public class Comment extends BaseTimeEntity{
 
     @Id
     @GeneratedValue
     @Column(name = "comment_id")
     private Long id;
-
-    private String date;
 
     private String content;
 
@@ -23,8 +22,8 @@ public class Comment {
     @JoinColumn(name = "post_id")
     private Post post;
 
-    public Comment( String date, String content, Post post) {
-        this.date = date;
+    @Builder
+    public Comment( String content, Post post) {
         this.content = content;
         this.post = post;
     }

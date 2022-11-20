@@ -39,7 +39,9 @@ public class WritingService {
     @Transactional
     public Long writeComment(NewCommentVo commentVo) {
         Post post = writingRepository.findOnePost(commentVo.getPostId());
-        Comment comment = new Comment(commentVo.getDate(), commentVo.getContent(), post);
+        Comment comment = Comment.builder()
+                .content(commentVo.getContent())
+                .post(post).build();
         writingRepository.saveComment(comment);
         return comment.getId();
     }

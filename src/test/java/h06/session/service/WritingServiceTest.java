@@ -34,14 +34,13 @@ class WritingServiceTest {
     @Test
     public void 댓글쓰기() throws Exception {
         //given
-        NewCommentVo commentVo = new NewCommentVo("test content", "test date", 1L);
+        NewCommentVo commentVo = new NewCommentVo("test content", 1L);
         //when
         Long commentId = writingService.writeComment(commentVo);
 
         Comment newComment = writingRepository.findOneComment(commentId);
         //then
         Assertions.assertThat(newComment.getContent()).isEqualTo(commentVo.getContent());
-        Assertions.assertThat(newComment.getDate()).isEqualTo(commentVo.getDate());
 
     }
 }

@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 public class NewCommentVo {
 
     private String content;
-    private String date;
     private Long postId;
 
 }
