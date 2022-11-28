@@ -4,8 +4,10 @@ import h06.session.entities.Comment;
 import h06.session.entities.Post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.List;
 
 @Repository
@@ -25,7 +27,13 @@ public class WritingRepository {
         return em.createQuery("select p from Post p", Post.class).getResultList();
     }
 
-    public void saveComment(Comment comment) {
+    @Transactional
+    public void deletePost(Long id) {
+        Post post = em.find(Post.class, id);
+        em.remove(post);
+    }
+
+        public void saveComment(Comment comment) {
         em.persist(comment);
     }
 

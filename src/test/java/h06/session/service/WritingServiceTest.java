@@ -32,6 +32,19 @@ class WritingServiceTest {
     }
 
     @Test
+    public void 글삭제() throws Exception {
+        //given
+        Post newPost = new Post();
+        Long postId = writingService.writePost(newPost);
+
+        //when
+        writingService.deletePost(postId);
+        Post foundPost = writingRepository.findOnePost(postId);
+        //then
+        Assertions.assertThat(foundPost).isEqualTo(null);
+    }
+
+    @Test
     public void 댓글쓰기() throws Exception {
         //given
         NewCommentVo commentVo = new NewCommentVo("test content", 1L);

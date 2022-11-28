@@ -37,6 +37,11 @@ public class WritingService {
     }
 
     @Transactional
+    public void deletePost(Long postId) {
+        writingRepository.deletePost(postId);
+    }
+
+    @Transactional
     public Long writeComment(NewCommentVo commentVo) {
         Post post = writingRepository.findOnePost(commentVo.getPostId());
         Comment comment = Comment.builder()
