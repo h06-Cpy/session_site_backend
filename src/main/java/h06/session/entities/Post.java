@@ -1,5 +1,6 @@
 package h06.session.entities;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,7 +27,8 @@ public class Post extends BaseTimeEntity{
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
-//    public Post(String title) { //constructor for the test... why can't it be used in actual execution?
-//        this.title = title;
-//    }
+    @Builder
+    public Post(String board, String title, String content) { //constructor for the test... why can't it be used in actual execution?
+        this.title = title;
+    }
 }

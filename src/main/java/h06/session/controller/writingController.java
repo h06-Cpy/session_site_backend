@@ -42,7 +42,7 @@ public class writingController {
     }
 
     @PostMapping("/comment")
-    public String newComment(@RequestBody NewCommentVo commentVo) {
+    public String newComment(@RequestBody NewCommentVo commentVo) throws Exception {
         writingService.writeComment(commentVo);
         return "success";
     }

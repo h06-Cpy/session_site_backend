@@ -2,6 +2,8 @@ package h06.session.service;
 
 import h06.session.entities.Comment;
 import h06.session.entities.Post;
+import h06.session.repository.CommentRepository;
+import h06.session.repository.PostRepository;
 import h06.session.repository.WritingRepository;
 import h06.session.vo.NewCommentVo;
 import org.assertj.core.api.Assertions;
@@ -11,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,7 +22,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class WritingServiceTest {
 
     @Autowired WritingService writingService;
-    @Autowired WritingRepository writingRepository;
+//    @Autowired WritingRepository writingRepository;
+    @Autowired
+    PostRepository postRepository;
+    @Autowired
+    CommentRepository commentRepository;
+
     @Test
     public void 글쓰기() throws Exception {
         //given
@@ -28,7 +36,7 @@ class WritingServiceTest {
         //when
         Long postId = writingService.writePost(post);
         //then
-        Assertions.assertThat(post).isEqualTo(writingRepository.findOnePost(postId));
+        Assertions.assertThat(post).isEqualTo(postRepository.findById(postId).get());
     }
 
     @Test
@@ -39,19 +47,21 @@ class WritingServiceTest {
 
         //when
         writingService.deletePost(postId);
-        Post foundPost = writingRepository.findOnePost(postId);
+        Optional<Post> foundPost = postRepository.findById(postId);
         //then
-        Assertions.assertThat(foundPost).isEqualTo(null);
+        Assertions.assertThat(foundPost.isEmpty()).isEqualTo(true);
     }
 
     @Test
     public void 댓글쓰기() throws Exception {
         //given
-        NewCommentVo commentVo = new NewCommentVo("test content", 1L);
+        Post post = new Post();
+        Long postId = writingService.writePost(post);
+        NewCommentVo commentVo = new NewCommentVo("test content", postId);
         //when
         Long commentId = writingService.writeComment(commentVo);
 
-        Comment newComment = writingRepository.findOneComment(commentId);
+        Comment newComment = commentRepository.findById(commentId).get();
         //then
         Assertions.assertThat(newComment.getContent()).isEqualTo(commentVo.getContent());
 
