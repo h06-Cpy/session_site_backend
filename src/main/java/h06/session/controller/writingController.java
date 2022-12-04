@@ -10,6 +10,10 @@ import h06.session.service.WritingService;
 
 import h06.session.vo.NewCommentVo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,12 +29,20 @@ public class writingController {
 
     @GetMapping("/")
     public ResponseEntity<List<BoardDto>> mainBoard() {
-        List<BoardDto> response = writingService.findPosts();
+        PageRequest pageable = PageRequest.of(0, 10);
+        List<BoardDto> response = writingService.findPosts("main", pageable);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<PostDto.Response> postDetail(@PathVariable("id") Long id) {
+    @GetMapping("/{board}")
+    public ResponseEntity<List<BoardDto>> board(@PathVariable("board") String board,
+                                                @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC)Pageable pageable) {
+        List<BoardDto> response = writingService.findPosts(board, pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/post")
+    public ResponseEntity<PostDto.Response> postDetail(@RequestParam("id") Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(writingService.findOnePost(id));
     }
 
